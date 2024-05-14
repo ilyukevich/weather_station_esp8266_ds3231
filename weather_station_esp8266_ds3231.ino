@@ -31,17 +31,18 @@ void setup()
   while (WiFi.status() != WL_CONNECTED)  // check if the wi-fi network is connected
   {
     delay(1000);
-    Serial.print(".");
+    Serial.print("#");
   }
   Serial.println("");
-  Serial.println("WiFi connected..!");
-  Serial.print("Got IP: ");  Serial.println(WiFi.localIP());
+  Serial.println("WiFi connected!");
+  Serial.print("Got IP: ");  
+  Serial.println(WiFi.localIP());
 
   server.on("/", handle_OnConnect);
   server.onNotFound(handle_NotFound);
 
   server.begin();
-  Serial.println("HTTP server started");
+  Serial.println("HTTP server started!");
 
 }
 void loop() 
@@ -62,7 +63,7 @@ void handle_OnConnect()
   humidity = bme.readHumidity();
   pressure = bme.readPressure() / 100.0F;
   altitude = bme.readAltitude(SEALEVELPRESSURE_HPA);
-  server.send(200, "text/html", SendHTML(temperature,humidity,pressure,altitude)); 
+  server.send(200, "text/html", SendHTML(temperature, humidity, pressure, altitude)); 
 }
 
 void handle_NotFound()
@@ -70,7 +71,7 @@ void handle_NotFound()
   server.send(404, "text/plain", "Not found");
 }
 
-String SendHTML(float temperature,float humidity,float pressure,float altitude)
+String SendHTML(float temperature, float humidity, float pressure, float altitude)
 {
   String ptr = "<!DOCTYPE html>";
   ptr +="<html>";
@@ -160,4 +161,3 @@ String SendHTML(float temperature,float humidity,float pressure,float altitude)
   ptr +="</html>";
   return ptr;
 }
-
